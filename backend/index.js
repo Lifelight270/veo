@@ -5,7 +5,7 @@ const cors = require("cors");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-require("dotenv").config();
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const { ObjectId, GridFSBucket } = mongoose.mongo;
 const app = express();
@@ -13,9 +13,9 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const mongoURI = process.env.MONGO_URI;
+const mongoURI = process.env.MONGO_URI || (process.env.NODE_ENV === "production" ? "" : "mongodb://localhost:27017/videos");
 if (!mongoURI) {
-  console.error("❌ MONGO_URI is required.");
+  console.error("❌ MONGO_URI is required. Set it in backend/.env or in the service environment (see backend/.env.example).");
   process.exit(1);
 }
 
