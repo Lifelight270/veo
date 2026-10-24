@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #0b0c0e;
+  --color-s1: #121417;
+  --color-s2: #1a1d21;
+  --color-line: #252a30;
+  --color-fg: #ecedee;
+  --color-mute: #8b9199;
+  --color-acc: #5eead4;
+}
+
+html { color-scheme: dark; }
+body { background: var(--color-bg); color: var(--color-fg); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--color-acc); outline-offset: 2px; }
+
+/* range sliders (seek + volume) */
+.rng { -webkit-appearance: none; appearance: none; width: 100%; height: 16px; background: none; cursor: pointer; }
+.rng::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--color-acc) var(--p, 0%), rgb(255 255 255 / .25) var(--p, 0%)); }
+.rng::-moz-range-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--color-acc) var(--p, 0%), rgb(255 255 255 / .25) var(--p, 0%)); }
+.rng::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -4px; border-radius: 50%; background: #fff; }
+.rng::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #fff; }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
