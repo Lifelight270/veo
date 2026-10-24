@@ -13,7 +13,11 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const mongoURI = "mongodb://localhost:27017/videos"; // or: process.env.MONGO_URI
+const mongoURI = process.env.MONGO_URI;
+if (!mongoURI) {
+  console.error("❌ MONGO_URI is required.");
+  process.exit(1);
+}
 
 let bucket;
 const files = () => mongoose.connection.db.collection("videos.files");
@@ -45,6 +49,11 @@ const shape = (f) => ({
 });
 const validId = (req, res, next) =>
   ObjectId.isValid(req.params.id) ? next() : res.status(400).json({ error: "Invalid id" });
+
+app.get("/health", (_, res) => {
+  const connected = mongoose.connection.readyState === 1;
+  res.status(connected ? 200 : 503).json({ status: connected ? "ok" : "starting" });
+});
 
 // List (newest first)
 app.get("/videos", async (_, res) => {
